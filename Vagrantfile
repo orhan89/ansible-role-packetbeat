@@ -37,9 +37,9 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     ubuntu.vm.provision 'ansible' do |ansible| 
       ansible.playbook = 'tests/test_vagrant.yml'
       ansible.extra_vars = {
-        filebeat_user:  'root',
-        filebeat_group: 'root',
-        filebeat_create_user: false,
+        packetbeat_user:  'root',
+        packetbeat_group: 'root',
+        packetbeat_create_user: false,
       }
     end
     
@@ -58,9 +58,9 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     centos6.vm.provision 'ansible' do |ansible| 
       ansible.playbook   = 'tests/test_vagrant.yml'
       ansible.extra_vars = {
-        filebeat_user:  'root',
-        filebeat_group: 'root',
-        filebeat_create_user: false,
+        packetbeat_user:  'root',
+        packetbeat_group: 'root',
+        packetbeat_create_user: false,
       }
     end
   end
@@ -78,9 +78,9 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     centos7.vm.provision 'ansible' do |ansible| 
       ansible.playbook = 'tests/test_vagrant.yml'
       ansible.extra_vars = {
-        filebeat_user:  'root',
-        filebeat_group: 'root',
-        filebeat_create_user: false,
+        packetbeat_user:  'root',
+        packetbeat_group: 'root',
+        packetbeat_create_user: false,
       }
     end
   end

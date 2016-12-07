@@ -1,21 +1,21 @@
 ---
-- name: Filebeat from URL
+- name: Packetbeat from URL
   hosts: localhost
   remote_user: root
 
   vars:
-    - fbeat_user:  root
-    - fbeat_group: root
-    - filebeat_use_apt_repo: false
-    - filebeat_version: 5.0.0-alpha4
-    - filebeat_deb_baseurl: 'https://download.elastic.co/beats/filebeat'
+    - packetbeat_user:  root
+    - packetbeat_group: root
+    - packetbeat_use_apt_repo: false
+    - packetbeat_version: 5.0.0-alpha4
+    - packetbeat_deb_baseurl: 'https://download.elastic.co/beats/packetbeat'
 
   roles:
-    - ansible-role-filebeat
+    - ansible-role-packetbeat
 
   tasks:
-    - name: Check filebeat version
-      command: filebeat.sh --version
+    - name: Check packetbeat version
+      command: packetbeat.sh --version
       register: r_version
     
     - debug:

@@ -3,10 +3,10 @@
   remote_user: root
 
   vars:
-    - fbeat_user:  root
-    - fbeat_group: root
+    - packetbeat_user:  root
+    - packetbeat_group: root
 
   roles:
-    - ansible-role-filebeat
+    - ansible-role-packetbeat
 
 # vi:ts=2:sw=2:et:ft=yaml

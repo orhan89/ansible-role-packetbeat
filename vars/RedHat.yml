@@ -1,22 +1,22 @@
 ---
 
-filebeat_v_major: "{{filebeat_version|regex_replace('^([0-9]+)\\..*$', '\\\\1')|int}}"
-filebeat_v_minor: "{{filebeat_version|regex_replace('^[0-9]+\\.([0-9]+).*$', '\\\\1')|int}}"
-filebeat_v_patch: "{{filebeat_version|regex_replace('^[0-9]+\\.[0-9]+\\.([0-9]+)$', '\\\\1')|int}}"
+packetbeat_v_major: "{{packetbeat_version|regex_replace('^([0-9]+)\\..*$', '\\\\1')|int}}"
+packetbeat_v_minor: "{{packetbeat_version|regex_replace('^[0-9]+\\.([0-9]+).*$', '\\\\1')|int}}"
+packetbeat_v_patch: "{{packetbeat_version|regex_replace('^[0-9]+\\.[0-9]+\\.([0-9]+)$', '\\\\1')|int}}"
 
-filebeat_repo_version: "{{filebeat_v_major}}.{{filebeat_v_minor}}"
+packetbeat_repo_version: "{{packetbeat_v_major}}.{{packetbeat_v_minor}}"
 
-filebeat_repository: |
-  [filebeat]
-  name=Filebeat repository
+packetbeat_repository: |
+  [packetbeat]
+  name=Packetbeat repository
   baseurl=http://packages.elastic.co/beats/yum/el/$basearch
   gpgcheck=1
   gpgkey=http://packages.elastic.co/GPG-KEY-elasticsearch
   enabled=1
 
-filebeat_packages:
-  - filebeat
+packetbeat_packages:
+  - packetbeat
 
-#filebeat_defaults_cfg: /etc/sysconfig/filebeat
+#packetbeat_defaults_cfg: /etc/sysconfig/packetbeat
 
 # vi:ts=2:sw=2:et:ft=yaml

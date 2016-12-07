@@ -1,7 +1,7 @@
 ---
 galaxy_info:
-  author: Emiliano Castagnari
-  description: Ansible role for FileBeat
+  author: Ricky Hariady
+  description: Ansible role for PacketBeat
   license: Apache
   min_ansible_version: 2.1
   platforms:
@@ -22,6 +22,8 @@ galaxy_info:
         - all
 
   categories:
+    - ELK
+    - beats
     - monitoring
     - system
 

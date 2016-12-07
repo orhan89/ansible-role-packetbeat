@@ -1,19 +1,19 @@
 ---
 
-- name: FileBeat Yum Repository
+- name: PacketBeat Yum Repository
   copy:
-    dest="/etc/yum.repos.d/filebeat-{{filebeat_version}}.repo"
-    content="{{filebeat_repository}}"
+    dest="/etc/yum.repos.d/packetbeat-{{packetbeat_version}}.repo"
+    content="{{packetbeat_repository}}"
     owner="root"
     group="root"
     mode="0644"
 
-- name: Install FileBeat (RedHat)
+- name: Install PacketBeat (RedHat)
   yum:
-    state="{{ (filebeat_upgrade) | ternary('latest', 'present') }}"
+    state="{{ (packetbeat_upgrade) | ternary('latest', 'present') }}"
     name="{{item}}"
     update_cache=yes
-  with_items: "{{ filebeat_packages }}"
-  notify: filebeat restart
+  with_items: "{{ packetbeat_packages }}"
+  notify: packetbeat restart
 
 # vi:ts=2:sw=2:et:ft=yaml

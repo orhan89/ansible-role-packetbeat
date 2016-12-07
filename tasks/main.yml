@@ -6,21 +6,21 @@
 
 - include: install.yml
   become: true
-  tags: filebeat_install
+  tags: packetbeat_install
 
 - include: config.yml
   become: true
-  tags: filebeat_config
+  tags: packetbeat_config
 
 - include: template.yml
   become: true
-  tags: filebeat_template
+  tags: packetbeat_template
 
-- name: Ensure Filebeat is enabled and started at boot
+- name: Ensure Packetbeat is enabled and started at boot
   service:
-    name: filebeat
+    name: packetbeat
     enabled: yes
     state: started
-  when: filebeat_start_at_boot
+  when: packetbeat_start_at_boot
 
 # vi:ts=2:sw=2:et:ft=yaml

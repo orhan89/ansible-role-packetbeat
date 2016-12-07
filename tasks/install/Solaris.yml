@@ -1,30 +1,30 @@
 ---
 
-- name: filebeat | Create Solaris log directory and parents
+- name: packetbeat | Create Solaris log directory and parents
   file:
-    path: "{{ filebeat_log_path }}"
-    owner: "{{ filebeat_user }}"
-    group: "{{ filebeat_group }}"
+    path: "{{ packetbeat_log_path }}"
+    owner: "{{ packetbeat_user }}"
+    group: "{{ packetbeat_group }}"
     state: directory
     recurse: yes
     mode: 0775
 
-- name: filebeat | Download Filebeat agent package
+- name: packetbeat | Download Packetbeat agent package
   get_url:
-    url: "{{ filebeat_solaris_url }}"
-    dest: "/tmp/filebeat-{{ filebeat_version }}.pkg"
+    url: "{{ packetbeat_solaris_url }}"
+    dest: "/tmp/packetbeat-{{ packetbeat_version }}.pkg"
     mode: 0550
 
-- name:  filebeat | Install Filebeat agent for Solaris
+- name:  packetbeat | Install Packetbeat agent for Solaris
   svr4pkg:
-    name: filebeat
-    src: "/tmp/filebeat-{{ filebeat_version }}.pkg"
+    name: packetbeat
+    src: "/tmp/packetbeat-{{ packetbeat_version }}.pkg"
     state: present
 
-- name: filebeat | Install Filebeat service
-  shell: (svccfg import /opt/filebeat/etc/filebeat.xml) && (svcs | grep filebeat) > /opt/filebeat/service.created
+- name: packetbeat | Install Packetbeat service
+  shell: (svccfg import /opt/packetbeat/etc/packetbeat.xml) && (svcs | grep packetbeat) > /opt/packetbeat/service.created
   args:
-    creates: /opt/filebeat/service.created
-  when: filebeat_start_at_boot
+    creates: /opt/packetbeat/service.created
+  when: packetbeat_start_at_boot
 
 # vi:ts=2:sw=2:et:ft=yaml

@@ -1,8 +1,8 @@
-# Ansible role for FileBeat
+# Ansible role for MetricBeat
 
-[![Build Status](https://travis-ci.org/torian/ansible-role-filebeat.svg)](https://travis-ci.org/torian/ansible-role-filebeat)
+[![Build Status](https://travis-ci.org/orhan89/ansible-role-packetbeat.svg)](https://travis-ci.org/orhan89/ansible-role-packetbeat)
 
-An Ansible Role that installs FileBeat on Red Hat/CentOS or Debian/Ubuntu.
+An Ansible Role that installs PacketBeat on Red Hat/CentOS or Debian/Ubuntu.
 
 ## Tested On
 
@@ -16,101 +16,103 @@ An Ansible Role that installs FileBeat on Red Hat/CentOS or Debian/Ubuntu.
 Available variables are listed below, along with their default values as
 definied in `defaults/main.yml`.
 
-FileBeat user and group. If you run FileBeat with a user other than root make
-sure your logs are readable by the FileBeat user. Add the FileBeat user to a
+PacketBeat user and group. If you run PacketBeat with a user other than root make
+sure your logs are readable by the PacketBeat user. Add the PacketBeat user to a
 privileged group, with access to your logs.
 
 On Ubuntu you would add the user to the `adm` group. On CentOS you can adjust
-the permissions with the `setfacl` command, e.g. `sudo setfacl -m g:filebeat:r
+the permissions with the `setfacl` command, e.g. `sudo setfacl -m g:packetbeat:r
 <path>`.
 
-    filebeat_user: root
-    filebeat_group: root
+    packebeat_user: root
+    packetbeat_group: root
 
-Create the `filebeat` user and group.
+Create the `packetbeat` user and group.
 
-    filebeat_create_user: true
+    packetbeat_create_user: true
 
-FileBeat version to use.
+PacketBeat version to use.
 
-    filebeat_version: 1.1.1
+    packetbeat_version: 1.1.1
 
-Make use of the FileBeat apt repo.
+Make use of the PacketBeat apt repo.
 
 On Debian-based systems, you may use a URL to install a specific `.deb`.
-To do so, change `filebeat_use_apt_repo` value to `false`, then (optionally)
-adjust the value of `filebeat_deb_baseurl` (which has a default value set for you).
+To do so, change `packetbeat_use_apt_repo` value to `false`, then (optionally)
+adjust the value of `packetbeat_deb_baseurl` (which has a default value set for you).
 
-    filebeat_use_apt_repo: true
+    packetbeat_use_apt_repo: true
 
-FileBeat `.deb` base URL for package download if `filebeat_use_apt_repo: false`
+PacketBeat `.deb` base URL for package download if `packetbeat_use_apt_repo: false`
 
-    filebeat_deb_baseurl: "https://download.elastic.co/beats/filebeat"
+    packetbeat_deb_baseurl: "https://download.elastic.co/beats/packetbeat"
 
-Start FileBeat at boot time.
+Start PacketBeat at boot time.
 
-    filebeat_start_at_boot: true
+    packetbeat_start_at_boot: true
 
-FileBeat version upgrade. This option allows package upgrades.
+PacketBeat version upgrade. This option allows package upgrades.
 
-    filebeat_upgrade: false
+    packetbeat_upgrade: false
 
-FileBeat configuration file.
+PacketBeat configuration file.
 
-    filebeat_config_file: /etc/filebeat/filebeat.yml
+    packetbeat_config_file: /etc/packetbeat/packetbeat.yml
 
-FileBeat registry file.
+PacketBeat registry file.
 
-    filebeat_config_registry_file: /var/lib/filebeat/registry
+    packetbeat_config_registry_file: /var/lib/packetbeat/registry
 
-The FileBeat configuration is built based on the variable `filebeat_config`.
-For easier management of the contents, the `filebeat_config` variable is made
+The PacketBeat configuration is built based on the variable `packetbeat_config`.
+For easier management of the contents, the `packetbeat_config` variable is made
 up of multiple other variables:
 
-* `filebeat_config_prospectors`
-* `filebeat_config_output`
-* `filebeat_config_shipper`
-* `filebeat_config_logging`
+* `packetbeat_config_interfaces`
+* `packetbeat_config_protocols`
+* `packetbeat_config_output`
+* `packetbeat_config_shipper`
+* `packetbeat_config_logging`
 
 ```yaml
-filebeat_config_prospectors: |
-  filebeat:
-    prospectors:
-      -
-        input_type: log
-        paths:
-          - /var/log/*.log
-        registry_file: "{{filebeat_config_registry_file}}"
-filebeat_config_output: |
+packetbeat_config_interfaces: |
+  interfaces:
+    devices: any
+packetbeat_config_protocols: |
+  protocols:
+    dns:
+      ports: [53]
+
+      include_authorities: true
+      include_additionals: true
+packetbeat_config_output: |
   output:
     elasticsearch:
       hosts: [ 'localhost:9200' ]
-filebeat_config_shipper: |
+packetbeat_config_shipper: |
   shipper:
-filebeat_config_logging: |
+packetbeat_config_logging: |
   logging:
     files:
       rotateeverybytes: 10485760 # = 10MB
-filebeat_config: |
-  {{filebeat_config_prospectors}}
-  {{filebeat_config_output}}
-  {{filebeat_config_shipper}}
-  {{filebeat_config_logging}}
+packetbeat_config: |
+  {{packetbeat_config_output}}
+  {{packetbeat_config_shipper}}
+  {{packetbeat_config_logging}}
 ```
 
-FileBeat templates (a list of templates to install).
-These templates will be copied to the /etc/filebeat directory
+PacketBeat templates (a list of templates to install).
+These templates will be copied to the /etc/packetbeat directory
 and can be used in the elasticsearch output for example.
 
-https://www.elastic.co/guide/en/beats/filebeat/current/elasticsearch-output.html#_template
+https://www.elastic.co/guide/en/beats/packetbeat/current/elasticsearch-output.html#_template
 
-    filebeat_templates: []
+    packetbeat_templates: []
 
 ## Usage
 ```yaml
     - hosts: logging
       roles:
-        - { role: torian.filebeat }
+        - { role: orhan89.packetbeat }
 ```
 
 ## License
@@ -119,5 +121,4 @@ See [License](LICENSE)
 
 ## Author Information
 
-This role was created in 2016 by Emiliano Castagnari.
-
+This role was created in 2016 by Ricky Hariady. It is based on the FileBeat role by Emiliano Castagnari: https://github.com/torian/ansible-role-filebeat

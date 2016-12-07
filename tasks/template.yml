@@ -1,13 +1,13 @@
 ---
 
-- name: Filebeat template file(s)
+- name: Packetbeat template file(s)
   copy:
     src: "{{ item }}"
-    dest:  "{{ filebeat_config_file | dirname }}/{{ item | basename }}"
-    owner: "{{ filebeat_user }}"
-    group: "{{ filebeat_group }}"
+    dest:  "{{ packetbeat_config_file | dirname }}/{{ item | basename }}"
+    owner: "{{ packetbeat_user }}"
+    group: "{{ packetbeat_group }}"
     mode: 0640
-  with_items: "{{ filebeat_templates }}"
-  notify: filebeat restart
+  with_items: "{{ packetbeat_templates }}"
+  notify: packetbeat restart
 
 # vi:ts=2:sw=2:et:ft=yaml
